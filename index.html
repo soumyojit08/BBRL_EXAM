@@ -10,14 +10,28 @@
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     background-color: #f0f0f0;
   }
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .logo {
+    max-width: 100px;
+    height: auto;
+  }
+
   .content {
     text-align: center;
+    margin-top: 30px;
   }
 
   .button {
@@ -31,6 +45,10 @@
 </style>
 </head>
 <body>
+<div class="header">
+  <img class="logo" src="path-to-your-first-image.jpg" alt="Logo 1">
+  <img class="logo" src="path-to-your-second-image.jpg" alt="Logo 2">
+</div>
 <div class="content">
   <h2>Welcome to the Fullscreen Google Form</h2>
   <p>Click the button below and then press F11 to view the form in full-screen mode.</p>
