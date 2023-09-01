@@ -1,173 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fullscreen Google Form</title>
-<style>
-  body {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #103A5d; /* Set blue background color */
-  }
-
-  .header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 10px;
-  }
-
-  .logo {
-    max-width: 100px;
-    height: auto;
-  }
-
-  .content {
-    text-align: center;
-    padding: 20px;
-    background-color: #ffffff; /* Set your desired content background color */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-  }
-
-  .button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #103A5d;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-
-  iframe {
-    max-width: 100%;
-  }
-/* Additional styles for fullscreen */
-  .fullscreen-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: none;
-    z-index: 1000;
-    text-align: center;
-  }
-
-  .fullscreen-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  /* Timer styles */
-  #timer {
-    color: #fff;
-    font-size: 24px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-
-  /* Watermark styles */
-  .watermark {
-    position: absolute;
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.5); /* Adjust opacity as needed */
-    transform: rotate(-45deg); /* Rotate the watermark */
-    transform-origin: 100% 100%;
-  }
-
-  .watermark:nth-child(odd) {
-    top: 20px;
-    right: 20px;
-  }
-
-  .watermark:nth-child(even) {
-    bottom: 20px;
-    left: 20px;
-  }
-</style>
+  <base target="_top">
+  <style>
+    body {
+      background-color: #103A5D;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .form-row label {
+      width: 30%;
+    }
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 68%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-container input[type="button"] {
+      background-color: #103A5D;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .form-container input[type="button"]:hover {
+      background-color: #092737;
+    }
+  </style>
 </head>
 <body>
-<div class="header">
-  <img class="logo logo1" src="https://www.ediblegroup.in/wp-content/uploads/2019/08/FINAL-BOLD-2-Copy-2-Copy.png" alt="Logo 1">
-</div>
-<div class="content">
-  <h2>Budge Budge Refineries Ltd</h2>
-  <p>Please click the button below to proceed with your exam.</p>
-  <a class="button" href="#" id="testLink">Test Link</a>
-</div>
-<div class="fullscreen-container" id="fullscreenContainer">
-  <iframe class="fullscreen-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSf4lhfOu60nNwvDJ3oHSBFXmPsYXjISU5DMgfVq9t3V67-NRQ/viewform" frameborder="0">Loading...</iframe>
-  <div id="timer">Time Remaining: <span id="countdown">30:00</span></div>
-  <div class="Budge Budge Refineries Ltd">Watermark 1</div>
-  <div class="Budge Budge Refineries Ltd">Watermark 2</div>
-  <div class="Budge Budge Refineries Ltd">Watermark 3</div>
-   <div class="Budge Budge Refineries Ltd">Watermark 4</div>
-    <div class="Budge Budge Refineries Ltd">Watermark 5</div>
-     <div class="Budge Budge Refineries Ltd">Watermark 6</div>
-  <!-- Add more watermark elements as needed -->
-</div>
-<script>
-  var countdownTimer; // Variable to store the countdown interval
+  <div class="form-container">
+    <form id="myForm">
+      <div class="form-row">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-row">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-row">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" required>
+      </div>
+      <div class="form-row">
+        <label for="additionalComment">Additional Comment:</label>
+        <textarea id="additionalComment" name="additionalComment"></textarea>
+      </div>
+      <div class="form-row">
+        <label for="assignedTo">Assigned To:</label>
+        <input type="text" id="assignedTo" name="assignedTo">
+      </div>
+      <div class="form-row">
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department">
+      </div>
+      <div class="form-row">
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority">
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="taskStartDate">Task Start Date:</label>
+        <input type="date" id="taskStartDate" name="taskStartDate">
+      </div>
+      <div class="form-row">
+        <label for="taskEndDate">Task End Date:</label>
+        <input type="date" id="taskEndDate" name="taskEndDate">
+      </div>
+      <div class="form-row">
+        <label for="fileLink">File Link:</label>
+        <input type="text" id="fileLink" name="fileLink">
+      </div>
+      <input type="button" value="Submit" onclick="submitForm()">
+    </form>
+  </div>
 
-  document.getElementById('testLink').addEventListener('click', function(event) {
-    event.preventDefault();
-    showFullscreenGoogleForm();
+  <script>
+    function submitForm() {
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var taskName = document.getElementById('taskName').value;
+      var additionalComment = document.getElementById('additionalComment').value;
+      var assignedTo = document.getElementById('assignedTo').value;
+      var department = document.getElementById('department').value;
+      var priority = document.getElementById('priority').value;
+      var taskStartDate = document.getElementById('taskStartDate').value;
+      var taskEndDate = document.getElementById('taskEndDate').value;
+      var fileLink = document.getElementById('fileLink').value;
 
-    // Start the countdown timer when the button is clicked
-    startCountdown(30); // Set the initial countdown time in minutes (e.g., 30 minutes)
-  });
-
-  function showFullscreenGoogleForm() {
-    var contentContainer = document.querySelector('.content');
-    var fullscreenContainer = document.getElementById('fullscreenContainer');
-
-    contentContainer.style.display = 'none';
-    fullscreenContainer.style.display = 'block';
-
-    // Enter fullscreen mode
-    if (fullscreenContainer.requestFullscreen) {
-      fullscreenContainer.requestFullscreen();
-    } else if (fullscreenContainer.mozRequestFullScreen) {
-      fullscreenContainer.mozRequestFullScreen();
-    } else if (fullscreenContainer.webkitRequestFullscreen) {
-      fullscreenContainer.webkitRequestFullscreen();
-    } else if (fullscreenContainer.msRequestFullscreen) {
-      fullscreenContainer.msRequestFullscreen();
+      google.script.run.processForm(name, email, taskName, additionalComment, assignedTo, department, priority, taskStartDate, taskEndDate, fileLink);
+      document.getElementById('myForm').reset();
     }
-  }
-
-  function startCountdown(minutes) {
-    var seconds = minutes * 60; // Convert minutes to seconds
-    var countdownDisplay = document.getElementById('countdown');
-
-    countdownTimer = setInterval(function() {
-      var minutesLeft = Math.floor(seconds / 60);
-      var secondsLeft = seconds % 60;
-
-      // Display the remaining time in the format "MM:SS"
-      countdownDisplay.textContent = padZero(minutesLeft) + ':' + padZero(secondsLeft);
-
-      if (seconds <= 0) {
-        clearInterval(countdownTimer);
-        countdownDisplay.textContent = 'Time Expired';
-      } else {
-        seconds--;
-      }
-    }, 1000); // Update the countdown every 1 second
-  }
-
-  function padZero(num) {
-    return (num < 10) ? '0' + num : num; // Add a leading zero if needed
-  }
-</script>
+  </script>
 </body>
 </html>
