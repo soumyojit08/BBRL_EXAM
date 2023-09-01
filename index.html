@@ -57,6 +57,7 @@
     background-color: rgba(0, 0, 0, 0.9);
     display: none;
     z-index: 1000;
+    text-align: center;
   }
 
   .fullscreen-iframe {
@@ -67,11 +68,30 @@
 
   /* Timer styles */
   #timer {
-    color: #103A5d;
+    color: #fff;
     font-size: 24px;
     position: absolute;
     top: 20px;
     right: 20px;
+  }
+
+  /* Watermark styles */
+  .watermark {
+    position: absolute;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.5); /* Adjust opacity as needed */
+    transform: rotate(-45deg); /* Rotate the watermark */
+    transform-origin: 100% 100%;
+  }
+
+  .watermark:nth-child(odd) {
+    top: 20px;
+    right: 20px;
+  }
+
+  .watermark:nth-child(even) {
+    bottom: 20px;
+    left: 20px;
   }
 </style>
 </head>
@@ -87,6 +107,13 @@
 <div class="fullscreen-container" id="fullscreenContainer">
   <iframe class="fullscreen-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSf4lhfOu60nNwvDJ3oHSBFXmPsYXjISU5DMgfVq9t3V67-NRQ/viewform" frameborder="0">Loading...</iframe>
   <div id="timer">Time Remaining: <span id="countdown">30:00</span></div>
+  <div class="Budge Budge Refineries Ltd">Watermark 1</div>
+  <div class="Budge Budge Refineries Ltd">Watermark 2</div>
+  <div class="Budge Budge Refineries Ltd">Watermark 3</div>
+   <div class="Budge Budge Refineries Ltd">Watermark 4</div>
+    <div class="Budge Budge Refineries Ltd">Watermark 5</div>
+     <div class="Budge Budge Refineries Ltd">Watermark 6</div>
+  <!-- Add more watermark elements as needed -->
 </div>
 <script>
   var countdownTimer; // Variable to store the countdown interval
@@ -96,7 +123,7 @@
     showFullscreenGoogleForm();
 
     // Start the countdown timer when the button is clicked
-    startCountdown(60); // Set the initial countdown time in minutes (e.g., 30 minutes)
+    startCountdown(30); // Set the initial countdown time in minutes (e.g., 30 minutes)
   });
 
   function showFullscreenGoogleForm() {
@@ -106,7 +133,16 @@
     contentContainer.style.display = 'none';
     fullscreenContainer.style.display = 'block';
 
-    // Enter fullscreen mode (your existing code)
+    // Enter fullscreen mode
+    if (fullscreenContainer.requestFullscreen) {
+      fullscreenContainer.requestFullscreen();
+    } else if (fullscreenContainer.mozRequestFullScreen) {
+      fullscreenContainer.mozRequestFullScreen();
+    } else if (fullscreenContainer.webkitRequestFullscreen) {
+      fullscreenContainer.webkitRequestFullscreen();
+    } else if (fullscreenContainer.msRequestFullscreen) {
+      fullscreenContainer.msRequestFullscreen();
+    }
   }
 
   function startCountdown(minutes) {
