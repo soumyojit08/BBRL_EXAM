@@ -1,58 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Form to Google Sheets</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fullscreen Google Form</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #103A5d; /* Set blue background color */
+  }
+
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+  }
+
+  .logo {
+    max-width: 100px;
+    height: auto;
+  }
+
+  .content {
+    text-align: center;
+    padding: 20px;
+    background-color: #ffffff; /* Set your desired content background color */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #103A5d;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+  iframe {
+    max-width: 100%;
+  }
+/* Additional styles for fullscreen */
+  .fullscreen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    z-index: 1000;
+  }
+
+  .fullscreen-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Timer styles */
+  #timer {
+    color: #103A5d;
+    font-size: 24px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+</style>
 </head>
 <body>
-    <form id="data-form">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" required><br><br>
-        
-        <label for="email">Email ID:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        
-        <button type="submit">Submit</button>
-    </form>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#data-form').submit(function (e) {
-                e.preventDefault();
+<div class="header">
+  <img class="logo logo1" src="https://www.ediblegroup.in/wp-content/uploads/2019/08/FINAL-BOLD-2-Copy-2-Copy.png" alt="Logo 1">
+</div>
+<div class="content">
+  <h2>Budge Budge Refineries Ltd</h2>
+  <p>Please click the button below to proceed with your exam.</p>
+  <a class="button" href="#" id="testLink">Test Link</a>
+</div>
+<div class="fullscreen-container" id="fullscreenContainer">
+  <iframe class="fullscreen-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSf4lhfOu60nNwvDJ3oHSBFXmPsYXjISU5DMgfVq9t3V67-NRQ/viewform" frameborder="0">Loading...</iframe>
+  <div id="timer">Time Remaining: <span id="countdown">30:00</span></div>
+</div>
+<script>
+  var countdownTimer; // Variable to store the countdown interval
 
-                const name = $('#name').val();
-                const phone = $('#phone').val();
-                const email = $('#email').val();
+  document.getElementById('testLink').addEventListener('click', function(event) {
+    event.preventDefault();
+    showFullscreenGoogleForm();
 
-                const data = {
-                    name: name,
-                    phone: phone,
-                    email: email
-                };
+    // Start the countdown timer when the button is clicked
+    startCountdown(60); // Set the initial countdown time in minutes (e.g., 30 minutes)
+  });
 
-                $.ajax({
-                    url: 'https://script.google.com/macros/s/AKfycbwBB3Sryo8nGCpQ-dyGbTuLVzler4r7Y1V7YwH6ZucGog05_CAXBX2bYENqIZX_eqho/exec', // Replace with your Google Script URL
-                    method: 'POST',
-                    data: data,
-                    success: function (response) {
-                        alert('Data submitted successfully!');
-                        // Clear form inputs if needed
-                        $('#name').val('');
-                        $('#phone').val('');
-                        $('#email').val('');
-                    },
-                    error: function (error) {
-                        alert('Error submitting data.');
-                    }
-                });
-            });
-        });
-    </script>
+  function showFullscreenGoogleForm() {
+    var contentContainer = document.querySelector('.content');
+    var fullscreenContainer = document.getElementById('fullscreenContainer');
+
+    contentContainer.style.display = 'none';
+    fullscreenContainer.style.display = 'block';
+
+    // Enter fullscreen mode (your existing code)
+  }
+
+  function startCountdown(minutes) {
+    var seconds = minutes * 60; // Convert minutes to seconds
+    var countdownDisplay = document.getElementById('countdown');
+
+    countdownTimer = setInterval(function() {
+      var minutesLeft = Math.floor(seconds / 60);
+      var secondsLeft = seconds % 60;
+
+      // Display the remaining time in the format "MM:SS"
+      countdownDisplay.textContent = padZero(minutesLeft) + ':' + padZero(secondsLeft);
+
+      if (seconds <= 0) {
+        clearInterval(countdownTimer);
+        countdownDisplay.textContent = 'Time Expired';
+      } else {
+        seconds--;
+      }
+    }, 1000); // Update the countdown every 1 second
+  }
+
+  function padZero(num) {
+    return (num < 10) ? '0' + num : num; // Add a leading zero if needed
+  }
+</script>
 </body>
 </html>
-
-
-
